@@ -3,7 +3,7 @@ import os
 import time
 from dotenv import load_dotenv
 import requests
-# Replace with your RapidAPI key
+
 RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY")
 API_URL = "https://twitter241.p.rapidapi.com/tweet"
 
