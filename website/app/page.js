@@ -1,103 +1,179 @@
-import Image from "next/image";
+"use client"
+
+import { useState, useEffect } from "react"
+import TweetFeed from "@/components/tweet-feed"
+import SearchBar from "@/components/search-bar"
+import FilterBar from "@/components/filter-bar"
+import LoadingScreen from "@/components/loading-screen"
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [isLoading, setIsLoading] = useState(true)
+  const [isFiltering, setIsFiltering] = useState(false)
+  const [tweets, setTweets] = useState([])
+  const [filteredTweets, setFilteredTweets] = useState([])
+  const [searchQuery, setSearchQuery] = useState("")
+  const [activeFilter, setActiveFilter] = useState("all")
+  const [minLikes, setMinLikes] = useState(0)
+  const [dateRange, setDateRange] = useState({ start: "", end: "" })
+  const [selectedAuthors, setSelectedAuthors] = useState([])
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  // Load data from public/data.json and show loading screen for exactly 2 seconds
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true)
+        const response = await fetch("/data.json")
+        const data = await response.json()
+
+        // Map data.json structure to the required tweet format
+        const mappedTweets = data.map((item, index) => ({
+          id: String(index + 1),
+          author: {
+            name: item.username,
+            handle: `@${item.username.toLowerCase().replace(/\s+/g, "")}`,
+            avatar: item.profile_img,
+          },
+          content: item.content,
+          tweet_url: item.tweet_url,
+          timestamp: item.created_at,
+          date: new Date(item.created_at),
+          likes: item.likes,
+          retweets: item.reposts,
+          replies: item.bookmarks,
+          tags: [], // Add tags if needed
+        }))
+
+        setTweets(mappedTweets)
+        setFilteredTweets(mappedTweets)
+      } catch (error) {
+        console.error("Error loading tweets:", error)
+      }
+      
+      // Always wait exactly 2 seconds before hiding loading screen to ensure everything is rendered
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 2000)
+    }
+
+    fetchData()
+  }, [])
+
+  // Handle search and filtering
+  useEffect(() => {
+    // Show filtering state while applying filters
+    setIsFiltering(true)
+    
+    const applyFilters = () => {
+      let result = [...tweets]
+
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase()
+        result = result.filter(
+          (tweet) =>
+            tweet.content.toLowerCase().includes(query) ||
+            tweet.author.name.toLowerCase().includes(query) ||
+            tweet.author.handle.toLowerCase().includes(query) ||
+            tweet.tags.some((tag) => tag.toLowerCase().includes(query))
+        )
+      }
+
+      if (minLikes > 0) {
+        result = result.filter(tweet => tweet.likes >= minLikes)
+      }
+
+      if (dateRange.start || dateRange.end) {
+        result = result.filter(tweet => {
+          const tweetDate = tweet.date.getTime()
+          const startDate = dateRange.start ? new Date(dateRange.start).getTime() : 0
+          const endDate = dateRange.end ? new Date(dateRange.end).getTime() : Infinity
+          return tweetDate >= startDate && tweetDate <= endDate
+        })
+      }
+
+      if (selectedAuthors.length > 0) {
+        result = result.filter(tweet => 
+          selectedAuthors.some(author => 
+            tweet.author.handle.toLowerCase() === author.toLowerCase()
+          )
+        );
+      }
+
+      if (activeFilter !== "all") {
+        switch (activeFilter) {
+          case "popular":
+            result = result.sort((a, b) => b.likes - a.likes)
+            break
+          case "recent":
+            result = result.sort((a, b) => b.date.getTime() - a.date.getTime())
+            break
+          case "discussed":
+            result = result.sort((a, b) => b.replies - a.replies)
+            break
+          default:
+            break
+        }
+      }
+
+      setFilteredTweets(result)
+      setIsFiltering(false)
+    }
+
+    // Debounce filter changes slightly to prevent UI freezing during rapid changes
+    const timeoutId = setTimeout(applyFilters, 300)
+    return () => clearTimeout(timeoutId)
+  }, [searchQuery, activeFilter, tweets, minLikes, dateRange, selectedAuthors])
+
+  if (isLoading) {
+    return <LoadingScreen />
+  }
+
+  return (
+    <main className="min-h-screen bg-black text-white">
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
+        <header className="mb-8">
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+            <h1 className="text-3xl font-mono font-bold tracking-tight text-center sm:text-left">Steal This Idea</h1>
+            <div className="text-center sm:text-right text-sm text-white/70 font-mono space-y-1.5">
+              <p>thank you <a href="https://x.com/paraschopra" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline hover:text-blue-300 transition-colors">@paraschopra</a> & <a href="https://x.com/gregisenberg" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline hover:text-blue-300 transition-colors">@gregisenberg</a></p>
+              <div className="flex justify-center sm:justify-end gap-2">
+                <p><a href="/data.json" download className="text-red-400 hover:underline hover:text-red-300 transition-colors">download json</a></p>
+                <span>•</span>
+                <p><a href="https://github.com/realhardik18/steal-this-idea" target="_blank" rel="noopener noreferrer" className="text-white hover:underline hover:text-white/80 transition-colors">veiw repository</a></p>
+              </div>
+              <p>made by <a href="https://x.com/realhardik18" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline hover:text-cyan-300 transition-colors">@realhardik18</a></p>
+            </div>
+          </div>
+          <div className="flex flex-col gap-4">
+            <SearchBar value={searchQuery} onChange={setSearchQuery} />
+            <FilterBar 
+              activeFilter={activeFilter} 
+              setActiveFilter={setActiveFilter} 
+              minLikes={minLikes} 
+              setMinLikes={setMinLikes} 
+              dateRange={dateRange} 
+              setDateRange={setDateRange}
+              selectedAuthors={selectedAuthors}
+              setSelectedAuthors={setSelectedAuthors}
+              resultsCount={filteredTweets.length}
+              totalCount={tweets.length}
+              isFiltering={isFiltering}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+          </div>
+        </header>
+        
+        {isFiltering ? (
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-pulse text-white/70 font-mono">Updating results...</div>
+          </div>
+        ) : filteredTweets.length > 0 ? (
+          <TweetFeed tweets={filteredTweets} />
+        ) : (
+          <div className="flex flex-col items-center justify-center py-16 text-center">
+            <p className="text-white/70 font-mono text-lg mb-2">No matching tweets found</p>
+            <p className="text-white/50 font-mono text-sm">Try adjusting your search criteria or filters</p>
+          </div>
+        )}
+      </div>
+    </main>
+  )
 }

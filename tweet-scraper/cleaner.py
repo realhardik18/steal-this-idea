@@ -12,7 +12,7 @@ def pretty_date(date_string):
 
 data=[]
 
-for tweet in tweets:
+for tweet in tweets[::-1]:
     obj={
         "profile_img": tweet['user']['legacy']['profile_image_url_https'],
         "username": tweet['user']['legacy']['screen_name'],        
