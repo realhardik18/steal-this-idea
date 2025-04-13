@@ -91,9 +91,6 @@ export default function TweetCard({ tweet }) {
                 <Heart className="h-4 w-4" />
                 <span className="text-xs font-mono">{tweet.likes}</span>
               </button>
-              <button className="flex items-center space-x-1 text-white/70 hover:text-purple-400 transition-colors tweet-interact">
-                <Share2 className="h-4 w-4" />
-              </button>
             </div>
           </div>
         </div>
