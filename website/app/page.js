@@ -138,7 +138,7 @@ export default function Home() {
               <div className="flex justify-center sm:justify-end gap-2">
                 <p><a href="https://hardikster4.gumroad.com/l/steal-this-idea" download className="text-red-400 hover:underline hover:text-red-300 transition-colors">download json</a></p>
                 <span>•</span>
-                <p><a href="https://github.com/realhardik18/steal-this-idea" target="_blank" rel="noopener noreferrer" className="text-white hover:underline hover:text-white/80 transition-colors">veiw repository</a></p>
+                <p><a href="https://github.com/realhardik18/steal-this-idea" target="_blank" rel="noopener noreferrer" className="text-white hover:underline hover:text-white/80 transition-colors">view repository</a></p>
               </div>
               <p>made by <a href="https://x.com/realhardik18" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline hover:text-cyan-300 transition-colors">@realhardik18</a></p>
             </div>
