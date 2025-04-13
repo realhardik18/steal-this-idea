@@ -136,7 +136,7 @@ export default function Home() {
             <div className="text-center sm:text-right text-sm text-white/70 font-mono space-y-1.5">
               <p>thank you <a href="https://x.com/paraschopra" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline hover:text-blue-300 transition-colors">@paraschopra</a> & <a href="https://x.com/gregisenberg" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline hover:text-blue-300 transition-colors">@gregisenberg</a></p>
               <div className="flex justify-center sm:justify-end gap-2">
-                <p><a href="/data.json" download className="text-red-400 hover:underline hover:text-red-300 transition-colors">download json</a></p>
+                <p><a href="https://hardikster4.gumroad.com/l/steal-this-idea" download className="text-red-400 hover:underline hover:text-red-300 transition-colors">download json</a></p>
                 <span>•</span>
                 <p><a href="https://github.com/realhardik18/steal-this-idea" target="_blank" rel="noopener noreferrer" className="text-white hover:underline hover:text-white/80 transition-colors">veiw repository</a></p>
               </div>
