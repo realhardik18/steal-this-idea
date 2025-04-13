@@ -29,7 +29,8 @@ export default function FilterBar({
   
   const availableAuthors = [
     { handle: "@paraschopra", name: "Paras Chopra" },
-    { handle: "@gregisenberg", name: "Greg Isenberg" }
+    { handle: "@gregisenberg", name: "Greg Isenberg" },
+    { handle: "@codyschneiderxx", name: "Cody Schneider" }
   ]
 
   const handleResetFilters = () => {
@@ -108,7 +109,7 @@ export default function FilterBar({
               <div className="text-white/70">
                 Showing <span className="text-white font-semibold">{resultsCount}</span> of <span className="text-white/90">{totalCount}</span> tweets
               </div>
-            )}
+            ) }
           </div>
         </div>
 

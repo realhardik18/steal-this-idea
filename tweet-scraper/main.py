@@ -3,6 +3,7 @@ import os
 import time
 from dotenv import load_dotenv
 import requests
+load_dotenv()
 
 RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY")
 API_URL = "https://twitter241.p.rapidapi.com/tweet"
@@ -23,8 +24,7 @@ def fetch_tweet_details(tweet_id):
 
 def main():
     input_file = "batch1.txt"
-    output_file = "tweets.json"
-
+    output_file = "tweets.json"            
     if not os.path.exists(input_file):
         print(f"Error: {input_file} not found.")
         return
