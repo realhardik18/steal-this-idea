@@ -16,6 +16,9 @@ export default function Home() {
   const [minLikes, setMinLikes] = useState(0)
   const [dateRange, setDateRange] = useState({ start: "", end: "" })
   const [selectedAuthors, setSelectedAuthors] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [tweetsPerPage, setTweetsPerPage] = useState(9) // Changed to multiple of 3
+  const [paginatedTweets, setPaginatedTweets] = useState([])
 
   // Load data from public/data.json and show loading screen for exactly 2 seconds
   useEffect(() => {
@@ -115,6 +118,7 @@ export default function Home() {
       }
 
       setFilteredTweets(result)
+      setCurrentPage(1) // Reset to first page when filters change
       setIsFiltering(false)
     }
 
@@ -122,6 +126,27 @@ export default function Home() {
     const timeoutId = setTimeout(applyFilters, 300)
     return () => clearTimeout(timeoutId)
   }, [searchQuery, activeFilter, tweets, minLikes, dateRange, selectedAuthors])
+
+  // Apply pagination to filtered tweets
+  useEffect(() => {
+    const indexOfLastTweet = currentPage * tweetsPerPage;
+    const indexOfFirstTweet = indexOfLastTweet - tweetsPerPage;
+    setPaginatedTweets(filteredTweets.slice(indexOfFirstTweet, indexOfLastTweet));
+  }, [filteredTweets, currentPage, tweetsPerPage]);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  
+  const nextPage = () => {
+    if (currentPage < Math.ceil(filteredTweets.length / tweetsPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+  
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   if (isLoading) {
     return <LoadingScreen />
@@ -166,7 +191,82 @@ export default function Home() {
             <div className="animate-pulse text-white/70 font-mono">Updating results...</div>
           </div>
         ) : filteredTweets.length > 0 ? (
-          <TweetFeed tweets={filteredTweets} />
+          <>
+            <TweetFeed tweets={paginatedTweets} />
+            <div className="mt-8 flex flex-col items-center">
+              <div className="flex items-center space-x-1 text-sm font-mono">
+                <p className="text-white/70">
+                  Showing {((currentPage - 1) * tweetsPerPage) + 1} - {Math.min(currentPage * tweetsPerPage, filteredTweets.length)} of {filteredTweets.length} tweets
+                </p>
+              </div>
+              <div className="mt-4 flex items-center space-x-3">
+                <button 
+                  onClick={prevPage} 
+                  disabled={currentPage === 1}
+                  className={`px-3 py-1.5 text-sm font-mono border border-white/20 rounded-md ${currentPage === 1 ? 'text-white/40 cursor-not-allowed' : 'text-white hover:bg-white/5'} transition-colors`}
+                >
+                  ← Prev
+                </button>
+                <div className="flex space-x-1.5">
+                  {Array.from({ length: Math.min(5, Math.ceil(filteredTweets.length / tweetsPerPage)) }, (_, i) => {
+                    // Show a window of pages around current page
+                    let pageNum;
+                    const totalPages = Math.ceil(filteredTweets.length / tweetsPerPage);
+                    
+                    if (totalPages <= 5) {
+                      pageNum = i + 1;
+                    } else if (currentPage <= 3) {
+                      pageNum = i + 1;
+                    } else if (currentPage >= totalPages - 2) {
+                      pageNum = totalPages - 4 + i;
+                    } else {
+                      pageNum = currentPage - 2 + i;
+                    }
+                    
+                    return pageNum <= totalPages ? (
+                      <button
+                        key={pageNum}
+                        onClick={() => paginate(pageNum)}
+                        className={`w-8 h-8 text-sm flex items-center justify-center rounded-md font-mono
+                          ${currentPage === pageNum ? 'bg-white text-black' : 'text-white border border-white/20 hover:bg-white/10'} transition-colors`}
+                      >
+                        {pageNum}
+                      </button>
+                    ) : null;
+                  })}
+                </div>
+                <button 
+                  onClick={nextPage} 
+                  disabled={currentPage >= Math.ceil(filteredTweets.length / tweetsPerPage)}
+                  className={`px-3 py-1.5 text-sm font-mono border border-white/20 rounded-md ${
+                    currentPage >= Math.ceil(filteredTweets.length / tweetsPerPage) 
+                      ? 'text-white/40 cursor-not-allowed' 
+                      : 'text-white hover:bg-white/5'
+                  } transition-colors`}
+                >
+                  Next →
+                </button>
+              </div>
+              <div className="mt-4 flex items-center space-x-2">
+                <label className="text-white/70 text-xs font-mono">Tweets per page:</label>
+                <select 
+                  value={tweetsPerPage}
+                  onChange={(e) => {
+                    setTweetsPerPage(Number(e.target.value));
+                    setCurrentPage(1); // Reset to first page when changing items per page
+                  }}
+                  className="bg-black text-white border border-white/20 rounded-md px-2 py-1 text-xs font-mono focus:outline-none focus:border-white/50"
+                >
+                  <option value={3}>3</option>
+                  <option value={6}>6</option>
+                  <option value={9}>9</option>
+                  <option value={12}>12</option>
+                  <option value={15}>15</option>
+                  <option value={21}>21</option>
+                </select>
+              </div>
+            </div>
+          </>
         ) : (
           <div className="flex flex-col items-center justify-center py-16 text-center">
             <p className="text-white/70 font-mono text-lg mb-2">No matching tweets found</p>
