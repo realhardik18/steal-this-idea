@@ -165,7 +165,7 @@ export default function Home() {
                 <span>•</span>
                 <p><a href="https://github.com/realhardik18/steal-this-idea" target="_blank" rel="noopener noreferrer" className="text-white hover:underline hover:text-white/80 transition-colors">view repository</a></p>
               </div>
-              <p>made by <a href="https://x.com/hrdktwt" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline hover:text-cyan-300 transition-colors">@hrdktwt</a></p>
+              <p>made by <a href="https://www.hrdk.life" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline hover:text-cyan-300 transition-colors">hrdk</a></p>
             </div>
           </div>
           <div className="flex flex-col gap-4">
