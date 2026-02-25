@@ -17,6 +17,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { launches } from "./data";
+import { useLaunchPath } from "./utils";
 
 // Extract unique categories from tags
 const ALL_CATEGORIES = [
@@ -33,8 +34,9 @@ const SORT_OPTIONS = [
 ];
 
 function LaunchCard({ launch }) {
+  const href = useLaunchPath(`/launches/${launch.id}`);
   return (
-    <Link href={`/launches/${launch.id}`}>
+    <Link href={href}>
       <motion.div
         layout
         initial={{ opacity: 0, scale: 0.95 }}
@@ -103,8 +105,9 @@ function LaunchCard({ launch }) {
 
 // Carousel card (simpler, for the hero section)
 function CarouselCard({ launch }) {
+  const href = useLaunchPath(`/launches/${launch.id}`);
   return (
-    <Link href={`/launches/${launch.id}`}>
+    <Link href={href}>
       <div className="group relative flex-shrink-0 w-[280px] md:w-[320px] rounded-2xl border border-white/[0.06] bg-[#0d0d0d] overflow-hidden cursor-pointer transition-all duration-500 hover:border-yellow-500/20">
         <div className="relative aspect-video w-full bg-[#080808] overflow-hidden">
           <Image

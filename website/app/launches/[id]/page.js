@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { launches } from "../data";
+import { useLaunchPath } from "../utils";
 
 const STOP_WORDS = new Set([
   "a", "an", "the", "and", "or", "but", "in", "on", "at", "to", "for", "of",
@@ -115,6 +116,7 @@ export default function VideoPage({ params }) {
   const { id } = use(params);
   const launch = launches.find((l) => l.id === id);
   const [showFullTranscript, setShowFullTranscript] = useState(false);
+  const backHref = useLaunchPath("/launches");
 
   const keywords = useMemo(
     () => (launch ? analyzeKeywords(launch.transcript) : []),
@@ -130,7 +132,7 @@ export default function VideoPage({ params }) {
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Launch not found</h1>
           <Link
-            href="/launches"
+            href={backHref}
             className="text-yellow-400 hover:underline inline-flex items-center gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -174,7 +176,7 @@ export default function VideoPage({ params }) {
           transition={{ duration: 0.3 }}
         >
           <Link
-            href="/launches"
+            href={backHref}
             className="inline-flex items-center gap-2 text-sm text-white/30 hover:text-yellow-400 transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
