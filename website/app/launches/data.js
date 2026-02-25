@@ -1,0 +1,102 @@
+export const launches = [
+  {
+    id: "1",
+    companyName: "Stripe",
+    launchDate: "2011-09-29",
+    videoSrcUrl: "https://www.youtube.com/embed/7edMJOAjHL0",
+    thumbnailUrl: "https://img.youtube.com/vi/7edMJOAjHL0/hqdefault.jpg",
+    tags: "Fintech / Payments",
+    transcript:
+      "Every year, millions of developers build applications that need to accept payments. But integrating payments has always been unnecessarily complex. You'd spend weeks reading documentation, negotiating with banks, and writing boilerplate code just to charge a credit card. We built Stripe to fix this. With just seven lines of code, any developer can start accepting payments on their website or mobile app. No merchant accounts, no gateway contracts, no complex integrations. Just simple, clean APIs that work the way developers expect. We handle everything from fraud detection to recurring billing to international payments across 135 currencies. Our infrastructure processes billions of dollars every year for companies of all sizes, from startups launching their first product to public companies scaling globally. We believe that enabling commerce on the internet should be as simple as adding a few lines of code. That's Stripe. Start building today.",
+  },
+  {
+    id: "2",
+    companyName: "Figma",
+    launchDate: "2016-09-27",
+    videoSrcUrl: "https://www.youtube.com/embed/RtFCHGJPFkM",
+    thumbnailUrl: "https://img.youtube.com/vi/RtFCHGJPFkM/hqdefault.jpg",
+    tags: "Design / Collaboration",
+    transcript:
+      "Design has always been a solo activity. You create a mockup, export it as a PNG, email it to your team, wait for feedback, then do it all over again. Version control means naming files final-v2-really-final. Collaboration means sitting behind someone's shoulder. We think design deserves better. Figma is the first professional-grade design tool built entirely in the browser. Multiple designers can work on the same file simultaneously, just like Google Docs. You can see each other's cursors, leave comments directly on designs, and share work with a simple link. No more syncing files, no more outdated versions. Everything lives in the cloud and updates in real time. Our rendering engine is built on WebGL, so performance matches native desktop apps. Vector editing, prototyping, design systems, and developer handoff — all in one tool that runs anywhere you have a browser. Design is a team sport now. Welcome to Figma.",
+  },
+  {
+    id: "3",
+    companyName: "Notion",
+    launchDate: "2018-03-15",
+    videoSrcUrl: "https://www.youtube.com/embed/oTahLEX3NXo",
+    thumbnailUrl: "https://img.youtube.com/vi/oTahLEX3NXo/hqdefault.jpg",
+    tags: "Productivity / Workspace",
+    transcript:
+      "Your team's knowledge is scattered everywhere. Documents in Google Docs, tasks in Asana, spreadsheets in Excel, notes in Evernote. You're constantly switching between tabs, losing context, and things fall through the cracks. Notion brings everything together into one workspace. It's documents, wikis, databases, and project management — all in one tool. But here's what makes it different: everything is built from the same building blocks. A page can contain text, tables, kanban boards, calendars, embedded files, and even other pages. You can create anything from a simple meeting note to a full company wiki to a product roadmap. Templates get your team started instantly, and our powerful database views let you see the same information as a table, board, timeline, or gallery. Notion adapts to how your team actually works instead of forcing you into rigid workflows. Teams at startups and Fortune 500 companies use Notion as their connected workspace. It's where your best thinking happens.",
+  },
+  {
+    id: "4",
+    companyName: "Linear",
+    launchDate: "2019-11-13",
+    videoSrcUrl: "https://www.youtube.com/embed/WJ1YnMCRIc0",
+    thumbnailUrl: "https://img.youtube.com/vi/WJ1YnMCRIc0/hqdefault.jpg",
+    tags: "Developer Tools / Project Management",
+    transcript:
+      "Issue trackers are broken. They're slow, cluttered, and painful to use. Teams dread opening Jira because everything takes five clicks and loads in three seconds. We've been there, and we built Linear because we believe project management software should be fast, focused, and beautiful. Linear is built for speed. Every interaction happens in milliseconds. Keyboard shortcuts let you fly through your workflow without touching the mouse. Create issues, set priorities, assign teammates, and move through sprints — all at the speed of thought. We designed Linear around opinionated workflows that actually work: cycles for time-boxed sprints, projects for cross-team initiatives, and roadmaps for long-term planning. Our GitHub and GitLab integrations automatically link pull requests to issues and update status. No more manual updates. The interface is clean, distraction-free, and crafted with obsessive attention to detail. We think the tools you use every day should feel like a joy, not a chore. Linear is how modern software teams build products.",
+  },
+  {
+    id: "5",
+    companyName: "Vercel",
+    launchDate: "2020-04-21",
+    videoSrcUrl: "https://www.youtube.com/embed/gA3v0Uts_wM",
+    thumbnailUrl: "https://img.youtube.com/vi/gA3v0Uts_wM/hqdefault.jpg",
+    tags: "Developer Tools / Cloud Infrastructure",
+    transcript:
+      "Deploying a website should take seconds, not hours. But traditional hosting is full of complexity — configuring servers, managing SSL certificates, setting up CDNs, dealing with cache invalidation. It slows teams down and creates friction between development and production. Vercel is the frontend cloud. Push your code to Git and we deploy it globally in seconds. Every pull request gets a unique preview URL so your team can review changes before they go live. We built Vercel around Next.js and the modern web framework ecosystem. Server-side rendering, static generation, edge functions, and incremental static regeneration all work out of the box. Your site is automatically distributed across our global edge network, so it loads fast for every user everywhere. Our analytics show you real user performance data, not synthetic benchmarks. And our serverless functions let you build full-stack applications without managing infrastructure. Develop, preview, ship. That's the Vercel workflow. Join hundreds of thousands of developers building the future of the web.",
+  },
+  {
+    id: "6",
+    companyName: "Supabase",
+    launchDate: "2020-06-10",
+    videoSrcUrl: "https://www.youtube.com/embed/dBOSUER_5T4",
+    thumbnailUrl: "https://img.youtube.com/vi/dBOSUER_5T4/hqdefault.jpg",
+    tags: "Developer Tools / Backend-as-a-Service",
+    transcript:
+      "Firebase changed how developers build applications. But it locked you into a proprietary ecosystem with a NoSQL database that doesn't scale well for complex queries. We thought developers deserved an open-source alternative built on proven technology. Supabase gives you a full Postgres database with real-time subscriptions, authentication, file storage, and edge functions — all set up in less than two minutes. Every project gets a dedicated Postgres instance, not a shared database. You get the full power of SQL, row-level security, and extensions like PostGIS for geospatial data. Our auto-generated APIs mean you can query your database directly from the client using our JavaScript, Python, or Flutter libraries. Real-time listeners push changes to connected clients instantly. Authentication supports email, social logins, and magic links out of the box. Everything is open source. You can self-host Supabase on your own infrastructure or use our managed platform. No vendor lock-in, ever. We're building the open-source Firebase alternative that developers actually want.",
+  },
+  {
+    id: "7",
+    companyName: "Railway",
+    launchDate: "2021-01-20",
+    videoSrcUrl: "https://www.youtube.com/embed/HmDm3qRGBCE",
+    thumbnailUrl: "https://img.youtube.com/vi/HmDm3qRGBCE/hqdefault.jpg",
+    tags: "Developer Tools / Cloud Platform",
+    transcript:
+      "Setting up infrastructure for a new project is painful. You spend hours configuring Docker, provisioning databases, setting environment variables, and debugging deployment pipelines before writing any actual code. Railway eliminates all of that. Deploy any application from a GitHub repository or a Dockerfile in one click. We detect your framework, install dependencies, build your project, and deploy it automatically. Need a database? Click to add Postgres, Redis, or MongoDB. Your services are connected with environment variables injected automatically. Our canvas-based dashboard lets you visualize your entire infrastructure — services, databases, and their connections — in one view. Scaling is automatic. Logs stream in real time. Deployments are instant with zero-downtime rollbacks. We handle networking, SSL, custom domains, and monitoring so you can focus entirely on your application code. Railway is infrastructure that gets out of your way. From hackathon projects to production workloads, deploy anything in seconds and scale when you're ready. Stop configuring servers and start shipping products.",
+  },
+  {
+    id: "8",
+    companyName: "Resend",
+    launchDate: "2023-01-17",
+    videoSrcUrl: "https://www.youtube.com/embed/baptR2jJggg",
+    thumbnailUrl: "https://img.youtube.com/vi/baptR2jJggg/hqdefault.jpg",
+    tags: "Developer Tools / Email",
+    transcript:
+      "Email is critical infrastructure, but the developer experience around it is terrible. Legacy providers give you clunky dashboards, confusing documentation, and APIs that feel like they were designed in 2005. Building beautiful transactional emails means wrestling with ancient HTML tables and inline CSS. We built Resend to bring email into the modern era. Our API is clean, our documentation is thorough, and our SDK works with every major programming language and framework. But the real game changer is React Email — an open-source library that lets you build email templates using React components. Write emails the same way you write your web application. No more table layouts, no more inline styles. Just clean component-based code that renders perfectly across every email client. Resend handles deliverability, analytics, and domain verification. Our dashboard shows you exactly what's happening with every email — delivered, opened, clicked, bounced. We obsess over the details so your emails actually reach the inbox. Email infrastructure for developers who care about quality.",
+  },
+  {
+    id: "9",
+    companyName: "Cursor",
+    launchDate: "2023-03-14",
+    videoSrcUrl: "https://www.youtube.com/embed/lnYPP1WFMWU",
+    thumbnailUrl: "https://img.youtube.com/vi/lnYPP1WFMWU/hqdefault.jpg",
+    tags: "AI / Developer Tools",
+    transcript:
+      "AI is transforming every industry, but the tools developers use every day haven't kept up. Copilot was a great start, but autocomplete is just the beginning of what's possible when you deeply integrate AI into the development workflow. Cursor is an AI-first code editor built from the ground up. It understands your entire codebase, not just the file you're editing. Ask it to refactor a function, and it knows about every caller. Ask it to fix a bug, and it reads the relevant tests. Our chat interface lets you have natural conversations about your code. Describe what you want in plain English, and Cursor writes the implementation across multiple files. It generates diffs you can review and apply with one click. Tab completion predicts your next edit based on what you're working on, not just the current line. And our terminal integration means you can ask questions about errors and get solutions instantly. We're not building another extension. We're reimagining what a code editor should be in the age of AI. Cursor makes you an order of magnitude more productive.",
+  },
+  {
+    id: "10",
+    companyName: "Midjourney",
+    launchDate: "2022-07-12",
+    videoSrcUrl: "https://www.youtube.com/embed/sEKB7S1ikHg",
+    thumbnailUrl: "https://img.youtube.com/vi/sEKB7S1ikHg/hqdefault.jpg",
+    tags: "AI / Creative Tools",
+    transcript:
+      "Imagine describing a picture in words and seeing it come to life in seconds. That's Midjourney. We're an independent research lab exploring new mediums of thought and expanding the imaginative powers of the human species. Our AI generates stunning, artistic images from simple text descriptions. Type a prompt like 'a cathedral made of crystal in a bioluminescent forest' and watch as four unique variations appear in under a minute. Each image is original, crafted by our diffusion models trained to understand composition, lighting, color theory, and artistic styles. What sets Midjourney apart is our focus on aesthetics. We don't just generate accurate images — we generate beautiful ones. Our models understand artistic concepts from impressionism to cyberpunk, from watercolor to photorealism. Upscale any image to high resolution for print or digital use. Blend images together, vary specific elements, and iterate on your creative vision. Our community of millions of artists, designers, and creators shares work and inspiration in our Discord channels. Midjourney is not replacing artists. We're giving everyone the power to visualize their imagination.",
+  },
+];
